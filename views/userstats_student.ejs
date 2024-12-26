@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js"></script>
+    <link rel="stylesheet" href="/css/nav.css">
+    <link rel="stylesheet" href="/css/student_stats.css">
+    <title>User statistics</title>
+</head>
+<body>
+    <header>
+      <nav class="navbar">
+          <a href="/dashboard" class="nav-branding" >Ventilation Project - Group 5</a>
+
+          <ul class="nav-menu">
+
+              <li class="nav-item">
+                  <a href="/dashboard" class="nav-link">Home</a>
+              </li>
+
+              <li class="nav-item">
+                  <a href="/stats" class="nav-link">Sensors</a>
+              </li>
+
+              <li class="nav-item">
+                  <a href="/userstats" class="nav-link">Users stats</a>
+              </li>
+
+              <li class="nav-item">
+                  <a href="/logout" class="nav-link">Log out</a>
+              </li>
+
+          </ul>
+          <div class="hamburger">
+              <span class="bar"></span>
+              <span class="bar"></span>
+              <span class="bar"></span>
+
+          </div>
+      </nav>
+    </header>
+
+
+    <div>
+        <h2> <%= student.username %> , your history is here</h2>
+
+        <h3> Since <%= student.createdAt.toLocaleString() %>  when you created your account, you have logged in <%= student.logins.length %>  times</h3>
+
+    </div> 
+    
+    <div id="wrapper">
+        <div class="chartBox">
+            <canvas class="charts" id="myHistoChart"></canvas> 
+        </div>
+
+        <div class="chartBox2">
+            <canvas class="charts" id="myLineChart"></canvas> 
+        </div>
+    </div>
+
+    <div id="div-table">
+        <table class="table">
+            <tr>
+                <th>Day</th>
+                <th>Time</th>
+            </tr>
+        
+            <tbody id="myTable">
+                
+            </tbody>
+        </table>
+    </div>
+        
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <script src="/js/userstats.js"></script>
+    <script src="/js/nav.js"></script>    
+
+
+    <script>
+          async function makeEverything() {
+            let data_json = await gettingData()
+            // FIRST GRAPH - HISTOGRAM FOR THE MODES
+            maketheHistogram(data_json)
+            // SECOND GRAPH - LINE FOR THE LOGGIN TIMES
+            maketheLine(data_json)
+            // THIRD TABLE - TABLE FOR DISPLAYING EXACT LOGGINS
+            maketheTable(data_json)
+        }
+        makeEverything()    
+    </script>
+</body>
+</html>
